@@ -1,6 +1,10 @@
 import { Clock } from "lucide-react";
 
-export default function Header() {
+interface HeaderProps {
+  onBookClick: () => void;
+}
+
+export default function Header({ onBookClick }: HeaderProps) {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -44,7 +48,10 @@ export default function Header() {
             >
               Quiz
             </button>
-            <button className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-2 rounded-full font-semibold hover:from-amber-400 hover:to-amber-500 transition-all shadow-lg shadow-amber-500/30">
+            <button
+              onClick={onBookClick}
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-2 rounded-full font-semibold hover:from-amber-400 hover:to-amber-500 transition-all shadow-lg shadow-amber-500/30"
+            >
               Réserver
             </button>
           </nav>
