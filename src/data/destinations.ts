@@ -4,6 +4,7 @@ export interface Destination {
   year: string;
   era: string;
   image: string;
+  video: string;
   shortDesc: string;
   fullDesc: string;
   highlights: string[];
@@ -19,6 +20,7 @@ export const destinations: Destination[] = [
     year: '1889',
     era: 'Belle Époque',
     image: '/paris.jpg',
+    video: '/Paris.mp4',
     shortDesc: 'Expérimentez l\'inauguration de la Tour Eiffel et l\'Exposition Universelle',
     fullDesc: 'Plongez dans l\'ère glamour de la Belle Époque et témoignez du dévoilement de la tour de fer controversée de Gustave Eiffel. Explorez l\'Exposition Universelle de 1889, assistez à des soirées exclusives avec l\'aristocratie parisienne et expérimentez la naissance des mouvements d\'art moderne à Montmartre.',
     highlights: [
@@ -38,6 +40,7 @@ export const destinations: Destination[] = [
     year: '-65 Millions d\'Années',
     era: 'Crétacé Tardif',
     image: '/cretace.jpg',
+    video: '/cretace.mp4',
     shortDesc: 'Témoignez l\'ère des dinosaures dans leurs derniers jours avant l\'extinction',
     fullDesc: 'Voyagez 65 millions d\'années en arrière pour expérimenter le crépuscule des dinosaures. Observez des créatures magnifiques comme le Tyrannosaure Rex et le Tricératops dans leur habitat naturel. Nos protocoles de sécurité temporelle vous garantissent de témoigner ces géants préhistoriques depuis des postes d\'observation sécurisés.',
     highlights: [
@@ -57,6 +60,7 @@ export const destinations: Destination[] = [
     year: '1504',
     era: 'Haute Renaissance',
     image: '/renaissance.jpeg',
+    video: '/renaissance.mp4',
     shortDesc: 'Témoignez Léonard de Vinci et Michel-Ange au sommet de leur génie',
     fullDesc: 'Visitez la Florence Renaissance durant l\'une des périodes artistiques les plus extraordinaires de l\'histoire. Témoignez de la rivalité entre Léonard de Vinci et Michel-Ange, voyez le dévoilement de David et immergez-vous dans la révolution artistique qui a changé la civilisation occidentale à jamais.',
     highlights: [
