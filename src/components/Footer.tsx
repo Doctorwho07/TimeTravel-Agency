@@ -60,7 +60,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#legal"
+                  href="#Conditions"
                   className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
                 >
                   Conditions d'Utilisation
@@ -68,7 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#legal"
+                  href="#Politique"
                   className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
                 >
                   Politique de Confidentialité
@@ -76,7 +76,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#legal"
+                  href="#Responsabilité"
                   className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
                 >
                   Responsabilité Temporelle

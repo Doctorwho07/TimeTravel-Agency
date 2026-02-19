@@ -2,10 +2,7 @@ import { Scale, Shield, AlertTriangle } from "lucide-react";
 
 export default function Legal() {
   return (
-    <section
-      id="legal"
-      className="py-24 px-6 bg-gradient-to-b from-black via-gray-900 to-black"
-    >
+    <section className="py-24 px-6 bg-gradient-to-b from-black via-gray-900 to-black">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-amber-200 to-amber-400 bg-clip-text text-transparent">
