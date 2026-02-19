@@ -198,9 +198,7 @@ Aucune utilisation commerciale.
 
 ## Membres du groupe
 
-- Nom Prénom
-- Nom Prénom
-- Nom Prénom
-- Nom Prénom
-
-À renseigner également sur Moodle conformément aux consignes.
+- MERLIN Sacha
+- NAEL Mozer
+- PEDRE Alexis
+- ROUCHES Alexis
