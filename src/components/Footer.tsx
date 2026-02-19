@@ -1,4 +1,4 @@
-import { Clock, Mail, Phone, MapPin } from 'lucide-react';
+import { Clock, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -8,7 +8,9 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Clock className="w-6 h-6 text-amber-400" />
-              <span className="text-xl font-bold text-amber-400">Agence Voyage Temporel</span>
+              <span className="text-xl font-bold text-amber-400">
+                Agence Voyage Temporel
+              </span>
             </div>
             <p className="text-gray-400 text-sm">
               Votre portail vers les plus grands moments de l'histoire.
@@ -18,19 +20,68 @@ export default function Footer() {
           <div>
             <h4 className="text-amber-400 font-semibold mb-4">Liens Rapides</h4>
             <ul className="space-y-2">
-              <li><a href="#home" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Accueil</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">À propos</a></li>
-              <li><a href="#destinations" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Destinations</a></li>
-              <li><a href="#quiz" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Quiz</a></li>
+              <li>
+                <a
+                  href="#home"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Accueil
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  À propos
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#destinations"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Destinations
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#quiz"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Quiz
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-amber-400 font-semibold mb-4">Légal</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Conditions d'Utilisation</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Politique de Confidentialité</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors text-sm">Responsabilité Temporelle</a></li>
+              <li>
+                <a
+                  href="#legal"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Conditions d'Utilisation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#legal"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Politique de Confidentialité
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#legal"
+                  className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                >
+                  Responsabilité Temporelle
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -55,7 +106,8 @@ export default function Footer() {
 
         <div className="border-t border-amber-500/20 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            &copy; 2087 Agence Voyage Temporel. Tous droits réservés à travers tous les timelines.
+            &copy; 2087 Agence Voyage Temporel. Tous droits réservés à travers
+            tous les timelines.
           </p>
         </div>
       </div>

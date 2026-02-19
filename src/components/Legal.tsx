@@ -18,7 +18,7 @@ export default function Legal() {
           </p>
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-12" id="Conditions">
           {/* SECTION 1 : CONDITIONS D'UTILISATION */}
           <div className="bg-gray-800/50 border border-amber-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm">
             <div className="flex items-center gap-4 mb-6 border-b border-amber-500/20 pb-4">
@@ -65,7 +65,10 @@ export default function Legal() {
           </div>
 
           {/* SECTION 2 : POLITIQUE DE CONFIDENTIALITÉ */}
-          <div className="bg-gray-800/50 border border-amber-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm">
+          <div
+            className="bg-gray-800/50 border border-amber-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm"
+            id="Politique"
+          >
             <div className="flex items-center gap-4 mb-6 border-b border-amber-500/20 pb-4">
               <Shield className="w-8 h-8 text-amber-400" />
               <h3 className="text-3xl font-bold text-amber-400">
@@ -101,7 +104,10 @@ export default function Legal() {
           </div>
 
           {/* SECTION 3 : RESPONSABILITÉ TEMPORELLE */}
-          <div className="bg-gray-800/50 border border-red-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm">
+          <div
+            className="bg-gray-800/50 border border-red-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm"
+            id="Responsabilité"
+          >
             <div className="flex items-center gap-4 mb-6 border-b border-red-500/20 pb-4">
               <AlertTriangle className="w-8 h-8 text-red-400" />
               <h3 className="text-3xl font-bold text-red-400">
