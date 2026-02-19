@@ -23,7 +23,7 @@ export default function Hero() {
     }
   };
   const scrollToDestination = () => {
-    const element = document.getElementById("destination");
+    const element = document.getElementById("destinations");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
