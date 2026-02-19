@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, ArrowRight, Play } from "lucide-react"; // Ajout de l'icône Play
+import { MapPin, ArrowRight, Play } from "lucide-react";
 import { destinations, Destination } from "../data/destinations";
 import Modal from "./Modal";
 
@@ -30,7 +30,8 @@ export default function Destinations() {
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Explorez notre sélection soigneusement choisie de destinations
-            temporelles.
+            temporelles, offrant chacune un voyage unique à travers les moments
+            les plus extraordinaires de l'histoire.
           </p>
         </div>
 
@@ -41,24 +42,39 @@ export default function Destinations() {
               className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-amber-500/20 hover:border-amber-500/50 transition-all hover:transform hover:scale-105 shadow-xl cursor-pointer"
               onClick={() => openModal(destination)}
             >
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-64 overflow-hidden bg-black">
+                {/* Vidéo qui apparaît et se joue au survol */}
+                {destination.video && (
+                  <video
+                    src={destination.video}
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10"
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                      e.currentTarget.currentTime = 0;
+                    }}
+                  />
+                )}
+
+                {/* Image par défaut */}
                 <img
                   src={destination.image}
                   alt={destination.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 relative z-0"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20 pointer-events-none" />
 
-                {/* Overlay vidéo si disponible */}
-                {destination.videoUrl && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
-                    <div className="bg-amber-400/90 p-3 rounded-full text-black shadow-lg">
-                      <Play className="fill-current w-6 h-6" />
-                    </div>
+                {/* Indicateur de vidéo */}
+                {destination.video && (
+                  <div className="absolute top-4 left-4 z-30 bg-black/60 p-2 rounded-full backdrop-blur-sm group-hover:opacity-0 transition-opacity duration-300">
+                    <Play className="w-4 h-4 text-amber-400" />
                   </div>
                 )}
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                <div className="absolute top-4 right-4 bg-black/70 px-3 py-1 rounded-full">
+                <div className="absolute top-4 right-4 bg-black/70 px-3 py-1 rounded-full z-30">
                   <span className="text-amber-400 text-sm font-semibold">
                     {destination.year}
                   </span>
