@@ -1,10 +1,10 @@
-import { Clock } from 'lucide-react';
+import { Clock } from "lucide-react";
 
 export default function Header() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -14,30 +14,32 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Clock className="w-8 h-8 text-amber-400" />
-            <h1 className="text-2xl font-bold text-amber-400">Agence Voyage Temporel</h1>
+            <h1 className="text-2xl font-bold text-amber-400">
+              Agence Voyage Temporel
+            </h1>
           </div>
 
           <nav className="hidden md:flex items-center gap-8">
             <button
-              onClick={() => scrollToSection('home')}
+              onClick={() => scrollToSection("home")}
               className="text-gray-300 hover:text-amber-400 transition-colors"
             >
               Accueil
             </button>
             <button
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection("about")}
               className="text-gray-300 hover:text-amber-400 transition-colors"
             >
               À propos
             </button>
             <button
-              onClick={() => scrollToSection('destinations')}
+              onClick={() => scrollToSection("destinations")}
               className="text-gray-300 hover:text-amber-400 transition-colors"
             >
               Destinations
             </button>
             <button
-              onClick={() => scrollToSection('quiz')}
+              onClick={() => scrollToSection("quiz")}
               className="text-gray-300 hover:text-amber-400 transition-colors"
             >
               Quiz
