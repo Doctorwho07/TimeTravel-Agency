@@ -1,4 +1,5 @@
-import { X, Clock, TrendingUp, CheckCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Clock, TrendingUp, CheckCircle, Loader2 } from "lucide-react";
 import { Destination } from "../data/destinations";
 
 interface ModalProps {
@@ -8,6 +9,15 @@ interface ModalProps {
 }
 
 export default function Modal({ destination, isOpen, onClose }: ModalProps) {
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
+
+  // On réinitialise l'état de chargement à chaque fois qu'on ouvre une nouvelle destination
+  useEffect(() => {
+    if (isOpen) {
+      setIsVideoLoading(true);
+    }
+  }, [isOpen, destination]);
+
   if (!isOpen || !destination) return null;
 
   return (
@@ -20,26 +30,39 @@ export default function Modal({ destination, isOpen, onClose }: ModalProps) {
           <X className="w-6 h-6 text-amber-400" />
         </button>
 
-        <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl bg-black">
+        <div className="relative h-64 md:h-80 overflow-hidden rounded-t-2xl bg-black flex items-center justify-center">
           {destination.video ? (
-            <video
-              src={destination.video}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
+            <>
+              {/* Spinner de chargement */}
+              {isVideoLoading && (
+                <div className="absolute z-20">
+                  <Loader2 className="w-10 h-10 text-amber-400 animate-spin" />
+                </div>
+              )}
+
+              <video
+                src={destination.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                onWaiting={() => setIsVideoLoading(true)}
+                onCanPlay={() => setIsVideoLoading(false)}
+                className={`w-full h-full object-cover transition-opacity duration-500 z-10 ${
+                  isVideoLoading ? "opacity-0" : "opacity-100"
+                }`}
+              />
+            </>
           ) : (
             <img
               src={destination.image}
               alt={destination.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover z-10"
             />
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
-          <div className="absolute bottom-6 left-6 z-10">
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none z-20" />
+          <div className="absolute bottom-6 left-6 z-30">
             <h2 className="text-4xl md:text-5xl font-bold text-amber-400 mb-2">
               {destination.name}
             </h2>
