@@ -7,6 +7,7 @@ import Quiz from "./components/Quiz";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import Modal from "./components/Modal";
+import Legal from "./components/Legal";
 import { Destination } from "./data/destinations"; // Assurez-vous que le chemin est bon
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Destinations onOpenModal={openModal} />
 
       <Quiz />
+      <Legal />
       <Footer />
       <Chatbot />
 
