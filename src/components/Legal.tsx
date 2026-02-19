@@ -15,7 +15,7 @@ export default function Legal() {
           </p>
         </div>
 
-        <div className="space-y-12" id="Conditions">
+        <div className="space-y-12" id="Conditions" scroll-mt-20>
           {/* SECTION 1 : CONDITIONS D'UTILISATION */}
           <div className="bg-gray-800/50 border border-amber-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm">
             <div className="flex items-center gap-4 mb-6 border-b border-amber-500/20 pb-4">
@@ -65,6 +65,7 @@ export default function Legal() {
           <div
             className="bg-gray-800/50 border border-amber-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm"
             id="Politique"
+            scroll-mt-20
           >
             <div className="flex items-center gap-4 mb-6 border-b border-amber-500/20 pb-4">
               <Shield className="w-8 h-8 text-amber-400" />
@@ -104,6 +105,7 @@ export default function Legal() {
           <div
             className="bg-gray-800/50 border border-red-500/20 rounded-2xl p-8 md:p-12 shadow-xl backdrop-blur-sm"
             id="Responsabilité"
+            scroll-mt-20
           >
             <div className="flex items-center gap-4 mb-6 border-b border-red-500/20 pb-4">
               <AlertTriangle className="w-8 h-8 text-red-400" />
