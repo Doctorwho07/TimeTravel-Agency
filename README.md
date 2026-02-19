@@ -49,8 +49,10 @@ Les visuels utilisés proviennent du projet TimeTravel Agency précédent.
   - Parcours alternatif "Parler à un conseiller humain" avec simulation de prise de contact.
   - Améliorations UX : indicateur de frappe (typing effect) et auto-scroll vers le dernier message.
 
-- Pages Légales Thématiques
-  - Création de mentions légales immersives et humoristiques (Conditions d'utilisation, Politique de confidentialité, Responsabilité Temporelle et gestion des paradoxes).
+- Section Légale Intégrée (Single Page)
+  - Ajout d'une section de mentions légales immersives et humoristiques directement dans le flux de la page principale.
+  - Thématisation complète : Conditions d'utilisation temporelles, Politique de confidentialité (protection contre les paradoxes) et Responsabilité (Effet Papillon).
+  - Navigation fluide via ancres depuis le footer sans rechargement de page.
 
 ## Fonctionnalité de personnalisation (automation)
 
@@ -148,7 +150,7 @@ Improve the overall UX:
 
 ### Prompt pour le lore et les mentions légales
 
-`Generate a complete React component for the Legal pages (Terms of Use, Privacy Policy, Liability). Write the content in French, fully adapted to the "Time Travel Agency" theme, including humorous sci-fi references like the butterfly effect, grandfather paradox, and temporal shields. No modifications needed on my end.`
+`Generate a complete React component for a Legal section (Terms of Use, Privacy Policy, Liability) to be integrated into the main landing page. Write the content in French, fully adapted to the "Time Travel Agency" theme, including humorous sci-fi references like the butterfly effect, grandfather paradox, and temporal shields. No modifications needed on my end.`
 
 ## Installation locale
 
