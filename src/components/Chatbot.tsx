@@ -7,44 +7,47 @@ import {
   CalendarPlus,
   MapPin,
 } from "lucide-react";
-import { destinations } from "../data/destinations"; // Assurez-vous du chemin
+import { destinations } from "../data/destinations";
 
-// Types pour structurer nos messages et choix
 type Option = { label: string; value: string };
 
 type Message = {
   id: string;
   role: "user" | "bot";
   text: string;
-  options?: Option[]; // S'il y a des boutons à afficher
-  isCalendarLink?: boolean; // Si c'est le message de succès avec le calendrier
+  options?: Option[];
+  isCalendarLink?: boolean;
 };
 
-// Les différentes étapes de la réservation
-type BookingStep =
+// J'ai ajouté 'advisor_message' et 'advisor_contact'
+type ChatStep =
   | "idle"
   | "destination"
   | "name"
   | "date"
   | "passengers"
   | "options"
-  | "confirm";
+  | "confirm"
+  | "advisor_message"
+  | "advisor_contact";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // État de la réservation
-  const [bookingStep, setBookingStep] = useState<BookingStep>("idle");
+  const [chatStep, setChatStep] = useState<ChatStep>("idle");
   const [bookingData, setBookingData] = useState<Record<string, string>>({});
 
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
       role: "bot",
-      text: 'Bonjour ! Je suis votre Agent Temporel. Dites "Réserver" pour commencer une réservation, ou posez-moi vos questions !',
-      options: [{ label: "🚀 Démarrer une réservation", value: "reserver" }],
+      text: "Bonjour ! Je suis votre Agent Temporel. Que puis-je faire pour vous aujourd'hui ?",
+      options: [
+        { label: "🚀 Démarrer une réservation", value: "reserver" },
+        { label: "👨‍💼 Parler à un conseiller", value: "conseiller" },
+      ],
     },
   ]);
 
@@ -56,7 +59,6 @@ export default function Chatbot() {
 
   const toggleChat = () => setIsOpen(!isOpen);
 
-  // Génération du lien Google Calendar
   const getCalendarUrl = () => {
     if (!bookingData.date || !bookingData.destinationId) return "#";
     const dest = destinations.find((d) => d.id === bookingData.destinationId);
@@ -69,7 +71,6 @@ export default function Chatbot() {
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}`;
   };
 
-  // Ajoute un message du bot avec un petit délai
   const botReply = (
     text: string,
     options?: Option[],
@@ -91,9 +92,7 @@ export default function Chatbot() {
     }, 1000);
   };
 
-  // Machine à états : Gère la logique de la conversation
   const processInput = (userInput: string, rawValue?: string) => {
-    // 1. Ajout du message utilisateur
     setMessages((prev) => [
       ...prev,
       { id: Date.now().toString(), role: "user", text: userInput },
@@ -103,14 +102,14 @@ export default function Chatbot() {
     const textLower = userInput.toLowerCase();
     const value = rawValue || userInput;
 
-    // Si on n'est pas en train de réserver
-    if (bookingStep === "idle") {
+    // --- ÉTAT DE REPOS (Menu principal) ---
+    if (chatStep === "idle") {
       if (
         textLower.includes("réserver") ||
         textLower.includes("reserver") ||
         value === "reserver"
       ) {
-        setBookingStep("destination");
+        setChatStep("destination");
         const destOptions = destinations.map((d) => ({
           label: `${d.name} (${d.year})`,
           value: d.id,
@@ -119,23 +118,40 @@ export default function Chatbot() {
           "Excellent choix ! Vers quelle époque souhaitez-vous voyager ?",
           destOptions,
         );
+      }
+      // NOUVEAU FLUX : Parler à un conseiller
+      else if (
+        textLower.includes("conseiller") ||
+        textLower.includes("agent") ||
+        textLower.includes("humain") ||
+        value === "conseiller"
+      ) {
+        setChatStep("advisor_message");
+        botReply(
+          "Un conseiller temporel est à votre disposition. Veuillez rédiger votre message ou la question que vous souhaitez lui poser :",
+        );
       } else if (textLower.includes("prix")) {
         botReply(
           "Nos tarifs varient. Dites 'Réserver' pour simuler un voyage !",
         );
       } else {
         botReply(
-          "Je suis spécialisé dans les réservations. Dites 'Réserver' pour commencer ou posez une question sur nos voyages.",
+          "Je suis spécialisé dans les réservations. Que souhaitez-vous faire ?",
+          [
+            { label: "🚀 Démarrer une réservation", value: "reserver" },
+            { label: "👨‍💼 Parler à un conseiller", value: "conseiller" },
+          ],
         );
       }
       return;
     }
 
-    // Si on est dans le processus de réservation
-    switch (bookingStep) {
+    // --- LOGIQUE DES ÉTAPES ---
+    switch (chatStep) {
+      // FLUX 1 : RÉSERVATION
       case "destination":
         setBookingData((prev) => ({ ...prev, destinationId: value }));
-        setBookingStep("name");
+        setChatStep("name");
         botReply(
           "C'est noté ! À quel nom dois-je enregistrer ce saut temporel ?",
         );
@@ -143,7 +159,7 @@ export default function Chatbot() {
 
       case "name":
         setBookingData((prev) => ({ ...prev, name: value }));
-        setBookingStep("date");
+        setChatStep("date");
         botReply(
           `Enchanté ${value}. À quelle date (de notre époque) souhaitez-vous partir ?`,
         );
@@ -151,7 +167,7 @@ export default function Chatbot() {
 
       case "date":
         setBookingData((prev) => ({ ...prev, date: value }));
-        setBookingStep("passengers");
+        setChatStep("passengers");
         botReply(
           "Parfait. Combien de personnes voyagent avec vous ? (Entrez un nombre)",
         );
@@ -159,7 +175,7 @@ export default function Chatbot() {
 
       case "passengers":
         setBookingData((prev) => ({ ...prev, passengers: value }));
-        setBookingStep("options");
+        setChatStep("options");
         botReply(
           "Avez-vous besoin de notre 'Pack Survie' (Vêtements d'époque + Assurance Paradoxe) ?",
           [
@@ -171,7 +187,7 @@ export default function Chatbot() {
 
       case "options":
         setBookingData((prev) => ({ ...prev, pack: value }));
-        setBookingStep("confirm");
+        setChatStep("confirm");
         const dest = destinations.find(
           (d) => d.id === bookingData.destinationId,
         );
@@ -186,20 +202,37 @@ export default function Chatbot() {
 
       case "confirm":
         if (value === "confirm_yes") {
-          setBookingStep("idle");
-          setBookingData({}); // Reset
+          setChatStep("idle");
+          setBookingData({});
           botReply(
             "Félicitations ! Votre vortex est en cours de préparation. N'oubliez pas d'ajouter la date à votre agenda !",
             undefined,
             true,
           );
         } else {
-          setBookingStep("idle");
+          setChatStep("idle");
           setBookingData({});
           botReply(
             "Réservation annulée. Dites 'Réserver' si vous changez d'avis !",
           );
         }
+        break;
+
+      // FLUX 2 : CONSEILLER
+      case "advisor_message":
+        // On pourrait sauvegarder le message de l'utilisateur ici, mais on passe directement à la suite.
+        setChatStep("advisor_contact");
+        botReply(
+          "Un agent du Bureau Temporel vient de recevoir votre demande. Pour qu'il puisse vous recontacter, veuillez m'indiquer votre adresse e-mail ou votre numéro de téléphone :",
+        );
+        break;
+
+      case "advisor_contact":
+        setChatStep("idle");
+        botReply(
+          `C'est noté. Nos agents vous recontacteront très prochainement sur : ${value}. Y a-t-il autre chose que je puisse faire pour vous ?`,
+          [{ label: "🚀 Démarrer une réservation", value: "reserver" }],
+        );
         break;
     }
   };
@@ -210,17 +243,17 @@ export default function Chatbot() {
     processInput(inputValue.trim());
   };
 
-  // Détermine si on doit cacher l'input text (quand on attend un clic sur un bouton)
+  // Désactiver l'input texte si on force l'utilisateur à cliquer sur un bouton
   const isInputDisabled =
-    bookingStep === "destination" ||
-    bookingStep === "options" ||
-    bookingStep === "confirm";
+    chatStep === "destination" ||
+    chatStep === "options" ||
+    chatStep === "confirm";
 
-  // Détermine le type d'input selon l'étape
+  // Changer le type de clavier/input sur mobile
   const inputType =
-    bookingStep === "date"
+    chatStep === "date"
       ? "date"
-      : bookingStep === "passengers"
+      : chatStep === "passengers"
         ? "number"
         : "text";
 
@@ -228,6 +261,7 @@ export default function Chatbot() {
     <div className="fixed bottom-6 right-6 z-50">
       {isOpen && (
         <div className="mb-4 w-96 h-[550px] bg-gradient-to-br from-gray-900 to-black border border-amber-500/30 rounded-2xl shadow-2xl shadow-amber-500/20 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+          {/* Header */}
           <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-4 flex items-center justify-between shadow-md z-10">
             <div className="flex items-center gap-3">
               <div className="bg-black/20 p-2 rounded-full">
@@ -251,13 +285,13 @@ export default function Chatbot() {
             </button>
           </div>
 
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-black/40">
+          {/* Messages */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-black/40 flex flex-col">
             {messages.map((msg) => (
               <div
                 key={msg.id}
                 className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
               >
-                {/* Bulle de texte */}
                 <div
                   className={`max-w-[85%] p-3 text-sm leading-relaxed whitespace-pre-wrap ${
                     msg.role === "user"
@@ -268,18 +302,18 @@ export default function Chatbot() {
                   {msg.text}
                 </div>
 
-                {/* Boutons d'options (uniquement pour le bot) */}
                 {msg.options && (
                   <div className="flex flex-col gap-2 mt-2 w-[85%]">
                     {msg.options.map((opt, i) => (
                       <button
                         key={i}
                         onClick={() => processInput(opt.label, opt.value)}
+                        // On désactive si ce n'est pas le dernier message ou si le bot "réfléchit"
                         disabled={
                           isTyping ||
-                          (bookingStep === "idle" &&
+                          (chatStep === "idle" &&
                             msg.id !== messages[messages.length - 1].id)
-                        } // Désactive les vieux boutons
+                        }
                         className="text-left px-4 py-2 text-sm bg-gray-900 border border-amber-500/30 rounded-xl text-amber-400 hover:bg-amber-500/10 hover:border-amber-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {opt.label}
@@ -288,7 +322,6 @@ export default function Chatbot() {
                   </div>
                 )}
 
-                {/* Bouton Calendrier */}
                 {msg.isCalendarLink && (
                   <div className="mt-3 w-[85%]">
                     <a
@@ -316,6 +349,7 @@ export default function Chatbot() {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Input Form */}
           <form
             onSubmit={handleSubmit}
             className="p-4 bg-gray-900 border-t border-amber-500/20"
@@ -348,6 +382,7 @@ export default function Chatbot() {
         </div>
       )}
 
+      {/* Bouton de bascule */}
       <button
         onClick={toggleChat}
         className={`bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 p-4 rounded-full shadow-2xl shadow-amber-500/50 hover:shadow-amber-400/70 transition-all transform ${!isOpen && "hover:scale-110"}`}
