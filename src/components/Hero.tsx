@@ -22,6 +22,12 @@ export default function Hero() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const scrollToDestination = () => {
+    const element = document.getElementById("destination");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section
@@ -57,7 +63,7 @@ export default function Hero() {
           Votre aventure au-delà de la quatrième dimension vous attend
         </p>
         <button
-          onClick={scrollToAbout}
+          onClick={scrollToDestination}
           className="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-10 py-4 rounded-full text-lg font-bold hover:from-amber-400 hover:to-amber-500 transition-all shadow-2xl shadow-amber-500/50 hover:shadow-amber-400/70 transform hover:scale-105"
         >
           Explorer les Destinations
